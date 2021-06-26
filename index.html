@@ -25,20 +25,23 @@
           <!-- <input type="button" id="close" value="Close app"/>
           <input type="button" id="devtools" value="Open DEV Tools"/> -->
             Drag the window here
+            <div id='sys-info'>
+                <div id='ip'></div>
+                <div id='cpu'></div>
+                <div id='hostname'></div>
+                <div id='mem'></div>
+                <div id='upTime'></div>
+            </div>
         </div>
-         
+        
         <script>
-            var app = require('electron').remote; 
-
-            // Close app 
-            document.getElementById("close").addEventListener("click", () => {
-                app.BrowserWindow.getFocusedWindow().close();
-            }, false);
-
-            // Close app 
-            document.getElementById("devtools").addEventListener("click", () => {
-                app.BrowserWindow.getFocusedWindow().openDevTools();
-            }, false);   
+            
+            const { ipcRenderer } = require('electron')
+            var conf = ipcRenderer.sendSync('synchronous-message', '')
+            console.log(conf)
+            
+            document.getElementById('ip').innerText = conf.ip
+            
         </script>
     </body>
 </html>
